@@ -60,18 +60,7 @@ class CheckoutPage extends StatefulWidget {
     required this.successUrl,
     required this.canceledUrl,
     this.publishableKey,
-  })  : assert(() {
-          assert(
-            successUrl.startsWith('https'),
-            'successUrl should use https',
-          );
-          assert(
-            canceledUrl.startsWith('https'),
-            'canceledUrl should use https',
-          );
-          return true;
-        }()),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   // ignore: library_private_types_in_public_api
@@ -127,10 +116,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
               final successUrl = widget.successUrl;
               final canceledUrl = widget.canceledUrl;
 
-              if (request.url.startsWith(successUrl)) {
+              if (request.url.contains(successUrl)) {
                 widget.onCompleted?.call(const CheckoutResponse.success());
                 return NavigationDecision.prevent;
-              } else if (request.url.startsWith(canceledUrl)) {
+              } else if (request.url.contains(canceledUrl)) {
                 widget.onCompleted?.call(const CheckoutResponse.canceled());
                 return NavigationDecision.prevent;
               }
